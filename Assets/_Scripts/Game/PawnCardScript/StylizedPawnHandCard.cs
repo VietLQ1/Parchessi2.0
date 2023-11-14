@@ -24,7 +24,7 @@ namespace _Scripts.CardScript
             var package = new SimulationPackage();
             package.AddToPackage(() =>
             {
-                Debug.Log("Discard Card");
+                Debug.Log("Discard CardDraw");
                 Destroy();
             });
             return package;

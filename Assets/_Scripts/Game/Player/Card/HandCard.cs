@@ -17,7 +17,7 @@ public class HandCard : PlayerEntity, ITargeter
 {
     public bool IsOwner { get; protected set; }
     
-    [Header("Hand Card")]
+    [Header("Hand CardDraw")]
     protected PlayerCardHand PlayerCardHand;
     public CardDescription CardDescription { get; protected set; }
     
@@ -80,8 +80,8 @@ public class HandCard : PlayerEntity, ITargeter
             
             package.AddToPackage(() =>
             {
-                // Inherit this class and write Card effect
-                Debug.Log(name + " Card drag to Pawn " + playerPawn.name);
+                // Inherit this class and write CardDraw effect
+                Debug.Log(name + " CardDraw drag to Pawn " + playerPawn.name);
                 PlayerCardHand.PlayCard(this);
 
                 Destroy();
@@ -93,8 +93,8 @@ public class HandCard : PlayerEntity, ITargeter
             package.AddToPackage(() =>
             {
             
-                // Inherit this class and write Card effect
-                Debug.Log(name + " Card drag to Empty ");
+                // Inherit this class and write CardDraw effect
+                Debug.Log(name + " CardDraw drag to Empty ");
                 PlayerCardHand.PlayCard(this);
 
                 Destroy();
@@ -112,7 +112,7 @@ public class HandCard : PlayerEntity, ITargeter
         var package = new SimulationPackage();
         package.AddToPackage(() =>
         {
-            Debug.Log("Discard Card");
+            Debug.Log("Discard CardDraw");
             Destroy();
         });
         return package;

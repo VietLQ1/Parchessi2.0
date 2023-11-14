@@ -59,7 +59,7 @@ namespace _Scripts.CardScript.AquaticCardScript
             {
                 package.AddToPackage(() =>
                 {
-                    // Inherit this class and write Card effect
+                    // Inherit this class and write CardDraw effect
                     var pawnStatEffectContainer = new PawnStatEffectContainer()
                     {
                         EffectDuration = BuffDuration.Value,
@@ -76,9 +76,9 @@ namespace _Scripts.CardScript.AquaticCardScript
             package.AddToPackage(() =>
             {
                 PlayerCardHand.PlayCard(this);
-                if (AudioPlayer.instance != null)
+                if (AudioManager.Instance != null)
                 {
-                    AudioPlayer.instance.PlaySound(AudioPlayer.instance.flame);
+                    AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Flame);
                 }
                 Destroy();
             });

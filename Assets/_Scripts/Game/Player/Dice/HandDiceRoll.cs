@@ -43,9 +43,9 @@ public class HandDiceRoll : MonoBehaviour
     {
         if (endNumber != 0)
             _animator.SetInteger(EndNumber, endNumber);
-        if (AudioPlayer.instance != null)
+        if (AudioManager.Instance != null)
         {
-            AudioPlayer.instance.PlaySound(AudioPlayer.instance.dice_end);
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.DiceEndRoll);
         }
     }
 

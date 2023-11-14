@@ -47,8 +47,8 @@ public class PawnHandCard : HandCard
         {
             if (targetee is PlayerEmptyTarget playerEmptyTarget)
             {
-                // Inherit this class and write Card effect
-                Debug.Log(name + " Card drag to Empty ");
+                // Inherit this class and write CardDraw effect
+                Debug.Log(name + " CardDraw drag to Empty ");
                 PlayerCardHand.PlayCard(this);
 
                 MapManager.Instance.SpawnPawnToMap(PawnDescription, OwnerClientID);
@@ -57,8 +57,8 @@ public class PawnHandCard : HandCard
             }
             else if (targetee is MapPawn playerPawn)
             {
-                // Inherit this class and write Card effect
-                Debug.Log(name + " Card drag to Pawn " + playerPawn.name);
+                // Inherit this class and write CardDraw effect
+                Debug.Log(name + " CardDraw drag to Pawn " + playerPawn.name);
                 PlayerCardHand.PlayCard(this);
 
                 Destroy();

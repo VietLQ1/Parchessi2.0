@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Shun_Card_System
 {
 
-    [CreateAssetMenu(fileName = "Card Information")]
+    [CreateAssetMenu(fileName = "CardDraw Information")]
     public abstract class BaseCardInformation : ScriptableObject
     {
         

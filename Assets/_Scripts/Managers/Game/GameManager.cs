@@ -179,7 +179,7 @@ public class GameManager : SingletonNetworkBehavior<GameManager>
             {
                 playerController.PlayerResourceController.AddCardToDeckServerRPC(cardDescription.GetCardContainer());
 
-                Debug.Log($"Card {cardDescription.CardID} : ");
+                Debug.Log($"CardDraw {cardDescription.CardID} : ");
             }
         }
     }

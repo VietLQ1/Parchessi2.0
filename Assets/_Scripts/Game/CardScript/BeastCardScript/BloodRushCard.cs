@@ -63,7 +63,7 @@ public class BloodRushCard : StylizedHandCard
         {
             package.AddToPackage(() =>
             {
-                // Inherit this class and write Card effect
+                // Inherit this class and write CardDraw effect
 
                 var pawnStatEffectContainer = new PawnStatEffectContainer()
                 {
@@ -83,9 +83,9 @@ public class BloodRushCard : StylizedHandCard
         package.AddToPackage(() =>
         {
             PlayerCardHand.PlayCard(this);
-            if (AudioPlayer.instance != null)
+            if (AudioManager.Instance != null)
             {
-                AudioPlayer.instance.PlaySound(AudioPlayer.instance.rock);
+                AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Rock);
             }
             Destroy();
         });

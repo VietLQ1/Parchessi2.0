@@ -44,8 +44,8 @@ public class RefreshCard : StylizedHandCard
 
         package.AddToPackage(() =>
         {
-            // Inherit this class and write Card effect
-            Debug.Log(name + " Card drag to Pawn " + playerPawn.name);
+            // Inherit this class and write CardDraw effect
+            Debug.Log(name + " CardDraw drag to Pawn " + playerPawn.name);
             int SpeedBuffValue = playerPawn.MaxHealth.Value - playerPawn.PawnDescription.PawnMaxHealth;
 
             var pawnStatEffectContainer = new PawnStatEffectContainer()
@@ -61,9 +61,10 @@ public class RefreshCard : StylizedHandCard
             MapManager.Instance.AddStatEffectServerRPC(pawnStatEffectContainer);
 
             PlayerCardHand.PlayCard(this);
-            if (AudioPlayer.instance != null)
+            
+            if (AudioManager.Instance != null)
             {
-                AudioPlayer.instance.PlaySound(AudioPlayer.instance.leaf);
+                AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Leaf);
             }
             Destroy();
 

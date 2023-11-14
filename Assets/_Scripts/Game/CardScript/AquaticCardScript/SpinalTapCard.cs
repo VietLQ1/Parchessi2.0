@@ -42,12 +42,12 @@ public class SpinalTapCard : StylizedHandCard
 
         package.AddToPackage(() =>
         {
-            // Inherit this class and write Card effect
-            Debug.Log(name + " Card drag to Pawn " + playerPawn.name);
+            // Inherit this class and write CardDraw effect
+            Debug.Log(name + " CardDraw drag to Pawn " + playerPawn.name);
 
-            if (AudioPlayer.instance != null)
+            if (AudioManager.Instance != null)
             {
-                AudioPlayer.instance.PlaySound(AudioPlayer.instance.bubble);
+                AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Bubble);
             }
 
             MapManager.Instance.TakeDamagePawnServerRPC(OwnerClientID, DealDamage.Value, playerPawn.ContainerIndex);

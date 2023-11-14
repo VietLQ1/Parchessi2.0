@@ -67,7 +67,7 @@ namespace _Scripts.CardScript.AquaticCardScript
             {
                 package.AddToPackage(() =>
                 {
-                    // Inherit this class and write Card effect
+                    // Inherit this class and write CardDraw effect
 
                     MapManager.Instance.TakeDamagePawnServerRPC(OwnerClientID, Demerit.Value, pawn.ContainerIndex);
                 });
@@ -77,7 +77,7 @@ namespace _Scripts.CardScript.AquaticCardScript
             {
                 package.AddToPackage(() =>
                 {
-                    // Inherit this class and write Card effect
+                    // Inherit this class and write CardDraw effect
 
                     MapManager.Instance.TakeDamagePawnServerRPC(OwnerClientID, DealDamage.Value, pawn.ContainerIndex);
                 });
@@ -87,9 +87,9 @@ namespace _Scripts.CardScript.AquaticCardScript
             {
                 PlayerCardHand.PlayCard(this);
 
-                if (AudioPlayer.instance != null)
+                if (AudioManager.Instance != null)
                 {
-                    AudioPlayer.instance.PlaySound(AudioPlayer.instance.rock);
+                    AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Rock);
                 }
                 Destroy();
             });

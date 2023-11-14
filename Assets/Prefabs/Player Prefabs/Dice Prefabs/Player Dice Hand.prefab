@@ -492,8 +492,8 @@ MonoBehaviour:
   _moveInteractableEase: 9
   _middleAlignDuration: 0.125
   _middleAlignEase: 9
-  _addCardSfx: {fileID: 0}
-  _dragCardSfx: {fileID: 0}
+  _addCardSfx: {fileID: 8300000, guid: c6ddf7a85e1272849804321bf0e72308, type: 3}
+  _dragHandSfx: {fileID: 8300000, guid: 382e0846a983d7b4a8d20d70c8e4b7b3, type: 3}
 --- !u!114 &4595897966817729638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -507,6 +507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxDices: 3
+  _diceSpawnRadius: 1
 --- !u!114 &6628269948586806367
 MonoBehaviour:
   m_ObjectHideFlags: 0

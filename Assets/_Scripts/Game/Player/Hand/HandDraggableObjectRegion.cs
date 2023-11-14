@@ -25,7 +25,7 @@ namespace _Scripts.Player
         [SerializeField] private Ease _middleAlignEase = Ease.OutCubic;
 
         [Header("Audio")] [SerializeField] private AudioClip _addCardSfx;
-        [SerializeField] private AudioClip _dragCardSfx;
+        [SerializeField] private AudioClip _dragHandSfx;
 
         protected override void Awake()
         {
@@ -68,7 +68,7 @@ namespace _Scripts.Player
 
             LocalMoveToDestination(_moveInteractableDuration, _moveInteractableEase);
 
-            if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(_dragCardSfx);
+            if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(_dragHandSfx);
         }
 
         public override void DisableInteractable()
@@ -78,7 +78,7 @@ namespace _Scripts.Player
 
             LocalMoveToDestination(_moveInteractableDuration, _moveInteractableEase);
 
-            if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(_dragCardSfx);
+            if (AudioManager.Instance != null) AudioManager.Instance.PlaySFX(_dragHandSfx);
         }
 
         private void LocalMoveToDestination(float duration, Ease ease)

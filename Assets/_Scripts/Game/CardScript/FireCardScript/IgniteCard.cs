@@ -45,8 +45,8 @@ public class IgniteCard : StylizedHandCard
 
         package.AddToPackage(() =>
         {
-            // Inherit this class and write Card effect
-            Debug.Log(name + " Card drag to Pawn " + playerPawn.name);
+            // Inherit this class and write CardDraw effect
+            Debug.Log(name + " CardDraw drag to Pawn " + playerPawn.name);
 
             MapManager.Instance.TakeDamagePawnServerRPC(OwnerClientID, DealDamage.Value, playerPawn.ContainerIndex);
             var pawnStatEffectContainer = new PawnStatEffectContainer()
@@ -61,9 +61,9 @@ public class IgniteCard : StylizedHandCard
             MapManager.Instance.AddStatEffectServerRPC(pawnStatEffectContainer);
 
             PlayerCardHand.PlayCard(this);
-            if (AudioPlayer.instance != null)
+            if (AudioManager.Instance != null)
             {
-                AudioPlayer.instance.PlaySound(AudioPlayer.instance.flame);
+                AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Flame);
             }
             Destroy();
 

@@ -23,10 +23,10 @@ public class MenuUI : MonoBehaviour
     {
         MainMenu.LeanScale(Vector2.zero, .3f).setEaseInBack().setOnComplete(OptionEnable);
         OptionMenu.LeanScale(Vector2.one, 0.5f);
-        if (AudioPlayer.instance != null)
+        if (AudioManager.Instance != null)
         {
-            AudioPlayer.instance.PlaySound(AudioPlayer.instance.click);
-            AudioPlayer.instance.PlaySound(AudioPlayer.instance.tab);
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Click);
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Tab);
         }
     }
 
@@ -34,19 +34,19 @@ public class MenuUI : MonoBehaviour
     {
         OptionMenu.LeanScale(Vector2.zero, .3f).setEaseInBack().setOnComplete(OptionDisable);
         MainMenu.LeanScale(Vector2.one, 0.5f);
-        if (AudioPlayer.instance != null)
+        if (AudioManager.Instance != null)
         {
-            AudioPlayer.instance.PlaySound(AudioPlayer.instance.click);
-            AudioPlayer.instance.PlaySound(AudioPlayer.instance.tab);
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Click);
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Tab);
         }
     }
 
     public void Quit()
     {
         Application.Quit();
-        if (AudioPlayer.instance != null)
+        if (AudioManager.Instance != null)
         {
-            AudioPlayer.instance.PlaySound(AudioPlayer.instance.click);
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Click);
         }
     }
 
@@ -77,10 +77,10 @@ public class MenuUI : MonoBehaviour
     public void Play()
     {
         AssetSceneManager.LoadScene(AssetSceneManager.AssetScene.LobbyScene.ToString());
-        if (AudioPlayer.instance != null)
+        if (AudioManager.Instance != null)
         {
-            AudioPlayer.instance.PlaySound(AudioPlayer.instance.click);
-            AudioPlayer.instance.PlaySound(AudioPlayer.instance.tab);
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Click);
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Tab);
         }
     }
 

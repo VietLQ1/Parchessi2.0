@@ -24,7 +24,7 @@ public class StylizedHandCard : HandCard
         var package = new SimulationPackage();
         package.AddToPackage(() =>
         {
-            Debug.Log("Discard Card");
+            Debug.Log("Discard CardDraw");
             Destroy();
         });
         return package;
