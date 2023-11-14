@@ -3060,7 +3060,7 @@ MonoBehaviour:
   Type: {fileID: 8300000, guid: 6e8772b49f34d402a90016ed445d8a2f, type: 3}
   DiceStart: {fileID: 8300000, guid: 7281f9b0fd7972e45bb54226230847e4, type: 3}
   DiceEndRoll: {fileID: 8300000, guid: be39f67009515a6409555b7927442c14, type: 3}
-  CardDraw: {fileID: 8300000, guid: a25b04bd4d7462e48a8c90055070bf6e, type: 3}
+  CardDraw: {fileID: 8300000, guid: 1308ca31f0cf8de4dac3934e6990b4fc, type: 3}
   Rock: {fileID: 8300000, guid: 8302ed2e28aff294782a05670774d825, type: 3}
   Leaf: {fileID: 8300000, guid: 3c7bab7225b8378469d116924d28b112, type: 3}
   Flame: {fileID: 8300000, guid: 4e1018a61d6bd57428ead74b21585181, type: 3}
