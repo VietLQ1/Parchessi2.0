@@ -101,9 +101,6 @@ public class PlayerResourceController : PlayerControllerRequireDependency
         }
     }
     
-    
-    
-   
 
     [ServerRpc]
     public void AddCardToHandServerRPC()
@@ -151,6 +148,13 @@ public class PlayerResourceController : PlayerControllerRequireDependency
         
     }
     
+    [ClientRpc]
+    public void AddCardToHandClientRPC(CardContainer cardContainer, int containerIndex)
+    {
+        _playerCardHand.AddCardToHand(cardContainer, containerIndex);    
+    }
+    
+    
     [ServerRpc(RequireOwnership = false)]
     public void ShuffleDeckServerRPC()
     {
@@ -195,16 +199,11 @@ public class PlayerResourceController : PlayerControllerRequireDependency
     }
 
     
-    [ClientRpc]
-    public void AddCardToHandClientRPC(CardContainer cardContainer, int containerIndex)
-    {
-        _playerCardHand.AddCardToHand(cardContainer, containerIndex);    
-    }
     
     [ServerRpc]
-    public void RemoveDiceServerRPC(int index)
+    public void RemoveDiceServerRPC(int containerIndex)
     {
-        PlayingDices[index] = EmptyDiceContainer;
+        PlayingDices[containerIndex] = EmptyDiceContainer;
 
         foreach (var playingDice in PlayingDices)
         {
@@ -218,12 +217,12 @@ public class PlayerResourceController : PlayerControllerRequireDependency
     }
     
     [ServerRpc]
-    public void RemoveCardFromHandServerRPC(int handCardContainerIndex)
+    public void RemoveCardFromHandServerRPC(int containerIndex)
     {
-        if (handCardContainerIndex < 0) return;
+        if (containerIndex < 0) return;
         
-        DiscardCards.Add(HandCards[handCardContainerIndex]);
-        HandCards[handCardContainerIndex] = EmptyCardContainer;
+        DiscardCards.Add(HandCards[containerIndex]);
+        HandCards[containerIndex] = EmptyCardContainer;
     }
     
     public bool CheckEmptyPlayingDices()
