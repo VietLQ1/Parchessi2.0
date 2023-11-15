@@ -34,4 +34,14 @@ public class AudioManager : PersistentSingletonMonoBehaviour<AudioManager>
         _sfxAudioSource.volume = volume;
     }
 
+    public void ChangeBgmVolume(float volume)
+    {
+        _bgmAudioSource.volume = volume;
+    }
+    
+    public void ChangeSfxVolume(float volume)
+    {
+        _sfxAudioSource.volume = volume;
+    }
+    
 }
