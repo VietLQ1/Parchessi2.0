@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using _Scripts.DataWrapper;
 using _Scripts.NetworkContainter;
 using _Scripts.Player;
 using _Scripts.Simulation;
@@ -25,6 +26,9 @@ public class PlayerResourceController : PlayerControllerRequireDependency
     public NetworkList<DiceContainer> BonusDices; // This Must work as array
     public NetworkList<DiceContainer> PlayingDices; // This Must work as array
 
+    public ObservableData<int> TurnCardCount = new ObservableData<int>(0);
+    public ObservableData<int> TurnDiceCount = new ObservableData<int>(0);
+    
     private PlayerDiceHand _playerDiceHand;
     private PlayerCardHand _playerCardHand;
 
@@ -39,8 +43,13 @@ public class PlayerResourceController : PlayerControllerRequireDependency
         IncomeDices = new();      
         PlayingDices = new(Enumerable.Repeat(EmptyDiceContainer, DICE_HAND_SIZE).ToArray());
         BonusDices = new();
+        
+        
+        BonusDices.OnListChanged += OnTurnDiceChanged ;
+        PlayingDices.OnListChanged += OnTurnDiceChanged ;
+        
+        HandCards.OnListChanged += OnTurnCardChanged;
     }
-
 
     public void InitializeHand(PlayerDiceHand playerDiceHand, PlayerCardHand playerCardHand)
     {
@@ -252,5 +261,40 @@ public class PlayerResourceController : PlayerControllerRequireDependency
         return true;
     }
     
+    private void OnTurnCardChanged(NetworkListEvent<CardContainer> changeEvent)
+    {
+        int cardCount = 0;
+        foreach (var cardContainer in HandCards)
+        {
+            if (!cardContainer.Equals(EmptyCardContainer))
+            {
+                cardCount++;
+            }
+        }
+        
+        TurnCardCount.Value = cardCount;
+    }
+    private void OnTurnDiceChanged(NetworkListEvent<DiceContainer> changeEvent)
+    {
+        int diceCount = 0;
+        
+        foreach (var diceContainer in PlayingDices)
+        {
+            if (!diceContainer.Equals(EmptyDiceContainer))
+            {
+                diceCount++;
+            }
+        }
+        
+        foreach (var diceContainer in BonusDices)
+        {
+            if (!diceContainer.Equals(EmptyDiceContainer))
+            {
+                diceCount++;
+            }
+        }
+        
+        TurnDiceCount.Value = diceCount;
+    }
     
 }

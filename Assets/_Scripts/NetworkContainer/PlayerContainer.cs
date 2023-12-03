@@ -11,6 +11,16 @@ namespace _Scripts.NetworkContainter
         public int ChampionID;
         public FixedString64Bytes PlayerName;
         
+        public static PlayerContainer CreateMockPlayerContainer(ulong clientID)
+        {
+            return new PlayerContainer()
+            {
+                PlayerID = "Mock Player " + clientID,
+                ChampionID = 0,
+                ClientID = clientID,
+                PlayerName = "Mock Player " + clientID
+            };
+        }
         
         public void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
         {

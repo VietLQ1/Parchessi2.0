@@ -31,7 +31,6 @@ public class GameManager : SingletonNetworkBehavior<GameManager>
 
 
     public PlayerController ClientOwnerPlayerController;
-    public Action OnNetworkSetUp { get; set; }
     public Action OnClientPlayerControllerSetUp { get; set; }
     public Action OnGameStart { get; set; }
     public Action OnGameEnd { get; set; }
@@ -186,8 +185,21 @@ public class GameManager : SingletonNetworkBehavior<GameManager>
 
     private void LoadPlayerSetupFromDeckDescription()
     {
-        var playerContainer = GameMultiplayerManager.Instance.GetAllPlayerContainer();
-
+        PlayerContainer [] playerContainers;
+        if (GameMultiplayerManager.Instance != null)
+        {
+            playerContainers = GameMultiplayerManager.Instance.GetAllPlayerContainer();
+        }
+        else
+        {
+            playerContainers = new []
+            {
+                PlayerContainer.CreateMockPlayerContainer(0)
+            };
+        }
+        
+        
+        
         foreach (var playerController in PlayerControllers)
         {
             foreach (var diceDescription in _incomeDiceDescriptions) // Load Dice
@@ -197,7 +209,7 @@ public class GameManager : SingletonNetworkBehavior<GameManager>
                 Debug.Log($"Dice {diceDescription.DiceID} : ");
             }
             
-            foreach (var player in playerContainer)
+            foreach (var player in playerContainers)
             {
                 if (playerController.OwnerClientId != player.ClientID)
                 {
