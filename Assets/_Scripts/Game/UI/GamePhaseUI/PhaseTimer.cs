@@ -68,7 +68,6 @@ namespace _Scripts.UI.GameUI
         {
             
             _timerSlider.value = _currentTime / _maxTime;
-            _currentTime = endTime;
             _isAnimationRunning = true;
 
             // Use OnComplete callback to trigger actions when the animation completes
@@ -79,6 +78,8 @@ namespace _Scripts.UI.GameUI
                     Debug.Log("Timer animation completed!");
                     
                     _isAnimationRunning = false;
+                    
+                    _currentTime = endTime;
                 });
         }
         
