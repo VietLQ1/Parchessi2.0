@@ -4,10 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EndSubsequenceButtonController : PhaseManipulateButtonControllerDependency
+public class EndSubsequenceButtonController : PhaseManipulateButtonController
 {
-    protected override void GameSetUp()
+    
+    protected override void ButtonSetUp()
     {
-        Button.onClick.AddListener(GameManager.Instance.ClientOwnerPlayerController.PlayerTurnController.EndSubsequencePhaseServerRPC);
+        Button.onClick.AddListener(TriggerEndPhase);
+    }
+
+    public override void TriggerEndPhase()
+    {
+        GameManager.Instance.ClientOwnerPlayerController.PlayerTurnController.EndSubsequencePhaseServerRPC();
     }
 }

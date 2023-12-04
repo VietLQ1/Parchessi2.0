@@ -89,8 +89,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28bc9d8ec854436a462a7f89b58f716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveDuration: 0.25
+  _moveDuration: 0.5
   _moveEase: 27
-  _originOffset: {x: 150, y: 0, z: 0}
+  _originOffset: {x: 140, y: 0, z: 0}
   _highlightScale: 1.2
   PlayerTurnPanel: {fileID: 0}
