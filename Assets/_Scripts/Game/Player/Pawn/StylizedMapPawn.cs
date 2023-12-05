@@ -12,8 +12,9 @@ namespace _Scripts.Player.Pawn
         [SerializeField] private Ease _moveEase = Ease.Linear;
         private SkeletonAnimationController _skeletonAnimationController;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _skeletonAnimationController = GetComponent<SkeletonAnimationController>();
         }
 

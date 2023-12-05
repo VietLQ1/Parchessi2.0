@@ -46,6 +46,7 @@ namespace _Scripts.UI.GameUI
             {
                 // Invoke the OnTimerComplete callback
                 OnTimerComplete?.Invoke();
+                SetTimerActive(false);
             }
         }
         
