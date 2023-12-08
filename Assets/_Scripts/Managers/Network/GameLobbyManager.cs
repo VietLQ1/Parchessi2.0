@@ -33,23 +33,7 @@ public class GameLobbyManager : PersistentSingletonNetworkBehavior<GameLobbyMana
     private Lobby _joinedLobby;
     private float _heartbeatTimer;
     private float _listLobbiesTimer;
-
-
-    protected override void Awake() {
-        base.Awake();
-        InitializeUnityAuthentication();
-    }
-
-    private async void InitializeUnityAuthentication() {
-        if (UnityServices.State != ServicesInitializationState.Initialized) {
-            InitializationOptions initializationOptions = new InitializationOptions();
-            //initializationOptions.SetProfile(UnityEngine.Random.Range(0, 10000).ToString());
-
-            await UnityServices.InitializeAsync(initializationOptions);
-
-            await AuthenticationService.Instance.SignInAnonymouslyAsync();
-        }
-    }
+    
 
     private void Update() {
         HandleHeartbeat();
