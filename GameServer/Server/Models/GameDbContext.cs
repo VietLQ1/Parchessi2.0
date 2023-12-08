@@ -5,8 +5,7 @@ namespace Server.Services;
 
 public class GameDbContext : DbContext
 {
-
-    public readonly List<User> Users = new();
+    public required DbSet<User> Users { get; set; }
     
     public GameDbContext(DbContextOptions<GameDbContext> options) : base(options)
     {

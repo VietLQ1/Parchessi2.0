@@ -11,7 +11,8 @@ HOW TO INSTALL AND RUN THESE
         cd .\Server
         
         This will create the initial migration
-            dotnet ef migrations add InitialCreate   
+            dotnet ef migrations add InitialCreate --project Server.csproj  
+
     
         This will create the database and apply the migration
             dotnet ef database update

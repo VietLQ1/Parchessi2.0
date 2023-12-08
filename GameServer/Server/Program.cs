@@ -2,24 +2,21 @@
 using Microsoft.EntityFrameworkCore;
 using Server.Services;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddDbContext<GameDbContext>(options =>
-    options.UseMySQL(options => {
-        try
-        {
-            builder.Configuration.GetConnectionString("DefaultConnection");
-            
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
-        
-    }));
+{
+    // Retrieve the connection string from the configuration and use it in the options
+    string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    
+    if (connectionString != null) options.UseMySql(connectionString, 
+        ServerVersion.AutoDetect(connectionString));
+});
+
+
 
 builder.Services.AddControllers();
 
