@@ -1,7 +1,6 @@
 D:\Unity Project\Parchessi2.0\GameServer\SharedLibrary\bin\Debug\net7.0\SharedLibrary.deps.json
 D:\Unity Project\Parchessi2.0\GameServer\SharedLibrary\bin\Debug\net7.0\SharedLibrary.dll
 D:\Unity Project\Parchessi2.0\GameServer\SharedLibrary\bin\Debug\net7.0\SharedLibrary.pdb
-D:\Unity Project\Parchessi2.0\GameServer\SharedLibrary\obj\Debug\net7.0\SharedLibrary.csproj.AssemblyReference.cache
 D:\Unity Project\Parchessi2.0\GameServer\SharedLibrary\obj\Debug\net7.0\SharedLibrary.GeneratedMSBuildEditorConfig.editorconfig
 D:\Unity Project\Parchessi2.0\GameServer\SharedLibrary\obj\Debug\net7.0\SharedLibrary.AssemblyInfoInputs.cache
 D:\Unity Project\Parchessi2.0\GameServer\SharedLibrary\obj\Debug\net7.0\SharedLibrary.AssemblyInfo.cs
@@ -10,3 +9,4 @@ D:\Unity Project\Parchessi2.0\GameServer\SharedLibrary\obj\Debug\net7.0\SharedLi
 D:\Unity Project\Parchessi2.0\GameServer\SharedLibrary\obj\Debug\net7.0\refint\SharedLibrary.dll
 D:\Unity Project\Parchessi2.0\GameServer\SharedLibrary\obj\Debug\net7.0\SharedLibrary.pdb
 D:\Unity Project\Parchessi2.0\GameServer\SharedLibrary\obj\Debug\net7.0\ref\SharedLibrary.dll
+D:\Unity Project\Parchessi2.0\GameServer\SharedLibrary\obj\Debug\net7.0\SharedLibrary.sourcelink.json

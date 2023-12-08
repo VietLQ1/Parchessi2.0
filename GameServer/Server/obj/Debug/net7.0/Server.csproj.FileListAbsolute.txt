@@ -63,3 +63,9 @@ D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net7.0\runtimes\unix\l
 D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
 D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Security.Cryptography.ProtectedData.dll
 D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net7.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net7.0\Humanizer.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net7.0\Mono.TextTemplating.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net7.0\System.CodeDom.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\obj\Debug\net7.0\Server.sourcelink.json

@@ -8,9 +8,9 @@ namespace Server.Controllers;
 [ApiController]
 public class UserApiController : Controller
 {
-    private readonly GameDBContext _context;
+    private readonly GameDbContext _context;
     
-    public UserApiController(GameDBContext context)
+    public UserApiController(GameDbContext context)
     {
         _context = context;
         

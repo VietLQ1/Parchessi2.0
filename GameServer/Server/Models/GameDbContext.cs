@@ -3,12 +3,12 @@ using SharedLibrary;
 
 namespace Server.Services;
 
-public class GameDBContext : DbContext
+public class GameDbContext : DbContext
 {
 
     public readonly List<User> Users = new();
     
-    public GameDBContext(DbContextOptions<GameDBContext> options) : base(options)
+    public GameDbContext(DbContextOptions<GameDbContext> options) : base(options)
     {
         
     }
