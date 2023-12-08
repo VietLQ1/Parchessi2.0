@@ -1,8 +1,29 @@
+
+using Microsoft.EntityFrameworkCore;
+using Server.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddDbContext<GameDBContext>(options =>
+    options.UseMySQL(options => {
+        try
+        {
+            builder.Configuration.GetConnectionString("DefaultConnection");
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        
+    }));
+
 builder.Services.AddControllers();
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
