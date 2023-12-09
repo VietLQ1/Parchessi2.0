@@ -1,7 +1,13 @@
-
+using System.Text;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Server;
+using Server.Interfaces;
 using Server.Services;
+using Newtonsoft.Json;
+using SharedLibrary;
+
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,11 +23,36 @@ builder.Services.AddDbContext<GameDbContext>(options =>
         ServerVersion.AutoDetect(connectionString));
 });
 
-var gameSettings = new GameSettings();
-builder.Configuration.Bind("GameSettings", gameSettings);
-builder.Services.AddSingleton(gameSettings);
+var settings = new Settings();
+builder.Configuration.Bind("Settings", settings);
+builder.Services.AddSingleton(settings);
 
-builder.Services.AddControllers();
+builder.Services.AddScoped<IGameAuthenticationService, AuthenticationService>();
+
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+    {
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        options.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver
+        {
+            NamingStrategy = new Newtonsoft.Json.Serialization.DefaultNamingStrategy() // Use Camel Case
+        };
+    }
+);
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = false,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(settings.JwtKey))
+        };
+    });
+
+
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -40,6 +71,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllers();
 

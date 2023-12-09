@@ -132,3 +132,14 @@ D:\Unity Project\Parchessi2.0\GameServer\Server\obj\Debug\net8.0\Server.pdb
 D:\Unity Project\Parchessi2.0\GameServer\Server\obj\Debug\net8.0\Server.genruntimeconfig.cache
 D:\Unity Project\Parchessi2.0\GameServer\Server\obj\Debug\net8.0\ref\Server.dll
 D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net8.0\Pomelo.EntityFrameworkCore.MySql.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net8.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net8.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
+D:\Unity Project\Parchessi2.0\GameServer\Server\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll

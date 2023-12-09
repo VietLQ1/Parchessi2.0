@@ -12,13 +12,13 @@ namespace Server.Services;
 
 public class AuthenticationService : IGameAuthenticationService
 {
-    private GameSettings _gameSettings;
+    private readonly Settings _settings;
     private readonly GameDbContext _context;
     
-    public AuthenticationService(GameDbContext context, GameSettings gameSettings)
+    public AuthenticationService(GameDbContext context, Settings settings)
     {
         _context = context;
-        _gameSettings = gameSettings;
+        _settings = settings;
     }   
     
     public IGameAuthenticationService.AuthenticationResult Register(string username, string password)
@@ -89,7 +89,7 @@ public class AuthenticationService : IGameAuthenticationService
     private string GenerateJwtToken(string userId)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var key = Encoding.ASCII.GetBytes(_gameSettings.JwtKey);
+        var key = Encoding.ASCII.GetBytes(_settings.JwtKey);
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
