@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace _Scripts.Managers.Network
 {
-    public class AuthenticationManager : PersistentSingletonNetworkBehavior<AuthenticationManager>
+    public class UnityAuthenticationServiceManager : PersistentSingletonNetworkBehavior<UnityAuthenticationServiceManager>
     {
 
         public string PlayerName { get; set; }
