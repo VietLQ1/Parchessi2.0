@@ -28,12 +28,7 @@ public class UserApiController : Controller
     [HttpPost]
     public IActionResult PostUser()
     {
-        _context.Users.Add(new User
-        {
-            UserName = "test",
-            PasswordHash = "test",
-            PasswordSalt = "test"
-        });
+        
         
         // Your action method logic here
         return Ok("User data");

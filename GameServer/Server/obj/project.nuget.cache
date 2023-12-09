@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Z4XJGdW6/8bKUYxYEdA5abIZhiqEUFgdPVUUU/9/avmYDOx7dlW0572f+sF4Cf0A9JhSiKvi4UVX1mS79iNVjQ==",
+  "dgSpecHash": "OAWUdIhSo/AFJr10VsHg4CT8/8Ig7LsLwIV1i7WBmo+HZ+g1Wm8l4uxKebFGiphqvREz7s7ym+XwtHKO9yzD6w==",
   "success": true,
   "projectFilePath": "D:\\Unity Project\\Parchessi2.0\\GameServer\\Server\\Server.csproj",
   "expectedPackageFiles": [
@@ -35,6 +35,10 @@
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.extensions.options\\8.0.0\\microsoft.extensions.options.8.0.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "C:\\Users\\PC\\.nuget\\packages\\microsoft.identitymodel.abstractions\\7.0.3\\microsoft.identitymodel.abstractions.7.0.3.nupkg.sha512",
+    "C:\\Users\\PC\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\7.0.3\\microsoft.identitymodel.jsonwebtokens.7.0.3.nupkg.sha512",
+    "C:\\Users\\PC\\.nuget\\packages\\microsoft.identitymodel.logging\\7.0.3\\microsoft.identitymodel.logging.7.0.3.nupkg.sha512",
+    "C:\\Users\\PC\\.nuget\\packages\\microsoft.identitymodel.tokens\\7.0.3\\microsoft.identitymodel.tokens.7.0.3.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.netcore.app\\2.0.7\\microsoft.netcore.app.2.0.7.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.netcore.dotnetapphost\\2.0.7\\microsoft.netcore.dotnetapphost.2.0.7.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\microsoft.netcore.dotnethostpolicy\\2.0.7\\microsoft.netcore.dotnethostpolicy.2.0.7.nupkg.sha512",
@@ -66,6 +70,7 @@
     "C:\\Users\\PC\\.nuget\\packages\\system.configuration.configurationmanager\\4.4.1\\system.configuration.configurationmanager.4.4.1.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\system.diagnostics.diagnosticsource\\7.0.2\\system.diagnostics.diagnosticsource.7.0.2.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
+    "C:\\Users\\PC\\.nuget\\packages\\system.identitymodel.tokens.jwt\\7.0.3\\system.identitymodel.tokens.jwt.7.0.3.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\system.io\\4.3.0\\system.io.4.3.0.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\system.io.pipelines\\6.0.3\\system.io.pipelines.6.0.3.nupkg.sha512",
     "C:\\Users\\PC\\.nuget\\packages\\system.reflection\\4.3.0\\system.reflection.4.3.0.nupkg.sha512",

@@ -1,5 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
+using Server;
 using Server.Services;
 
 
@@ -16,7 +17,9 @@ builder.Services.AddDbContext<GameDbContext>(options =>
         ServerVersion.AutoDetect(connectionString));
 });
 
-
+var gameSettings = new GameSettings();
+builder.Configuration.Bind("GameSettings", gameSettings);
+builder.Services.AddSingleton(gameSettings);
 
 builder.Services.AddControllers();
 
