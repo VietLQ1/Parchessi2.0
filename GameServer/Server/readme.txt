@@ -12,7 +12,8 @@ HOW TO INSTALL AND RUN THESE
         
         This will create the initial migration
             dotnet ef migrations add InitialCreate --project Server.csproj  
-
+            dotnet ef migrations add SomethingJustLikeAGitLog -project Server.csproj
+            
     
         This will create the database and apply the migration
             dotnet ef database update

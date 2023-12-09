@@ -7,5 +7,7 @@ namespace SharedLibrary
         public string UserName { get; set; } = null!;
         public string PasswordHash { get; set; } = null!;
         public string PasswordSalt { get; set; } = null!;
+        
+        public string UnityPlayerId { get; set; } = null!;
     }
 }
