@@ -7,7 +7,6 @@ namespace _Scripts.Managers.Network
 {
     public class UnityAuthenticationServiceManager : PersistentSingletonNetworkBehavior<UnityAuthenticationServiceManager>
     {
-
         public string PlayerName { get; set; }
         public string PlayerId { get; set; }
 
@@ -45,7 +44,60 @@ namespace _Scripts.Managers.Network
                 PlayerName = playerName;
             }
         }
+
+        #region UsernamePassword
         
+        public async Task SignInWithUsernamePasswordAsync(string username, string password)
+        {
+            await InitializeUnityService(username);
+         
+            try
+            {
+                await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, password);
+                Debug.Log("SignIn is successful.");
+            }
+            catch (AuthenticationException ex)
+            {
+                // Compare error code to AuthenticationErrorCodes
+                // Notify the player with the proper error message
+                Debug.LogException(ex);
+                throw;
+            }
+            catch (RequestFailedException ex)
+            {
+                // Compare error code to CommonErrorCodes
+                // Notify the player with the proper error message
+                Debug.LogException(ex);
+                throw;
+            }
+        }
+        
+        public async Task SignUpWithUsernamePasswordAsync(string username, string password)
+        {
+            await InitializeUnityService(username);
+         
+            try
+            {
+                await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(username, password);
+                Debug.Log("SignUp is successful.");
+            }
+            catch (AuthenticationException ex)
+            {
+                // Compare error code to AuthenticationErrorCodes
+                // Notify the player with the proper error message
+                Debug.LogException(ex);
+                throw;
+            }
+            catch (RequestFailedException ex)
+            {
+                // Compare error code to CommonErrorCodes
+                // Notify the player with the proper error message
+                Debug.LogException(ex);
+                throw;
+            }
+        }
+        
+        #endregion
         
         public async Task SignInWithGoogleAsync(string idToken)
         {
