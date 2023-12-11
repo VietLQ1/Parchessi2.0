@@ -19,11 +19,11 @@ public class LobbyMessageUI : MonoBehaviour {
 
     private void Start() {
         GameMultiplayerManager.Instance.OnFailedToJoinGame += KitchenGameMultiplayer_OnFailedToJoinGame;
-        GameLobbyManager.Instance.OnCreateLobbyStarted += KitchenGameLobby_OnCreateLobbyStarted;
-        GameLobbyManager.Instance.OnCreateLobbyFailed += KitchenGameLobby_OnCreateLobbyFailed;
-        GameLobbyManager.Instance.OnJoinStarted += KitchenGameLobby_OnJoinStarted;
-        GameLobbyManager.Instance.OnJoinFailed += KitchenGameLobby_OnJoinFailed;
-        GameLobbyManager.Instance.OnQuickJoinFailed += KitchenGameLobby_OnQuickJoinFailed;
+        UnityRelayLobbyServiceManager.Instance.OnCreateLobbyStarted += KitchenGameLobby_OnCreateLobbyStarted;
+        UnityRelayLobbyServiceManager.Instance.OnCreateLobbyFailed += KitchenGameLobby_OnCreateLobbyFailed;
+        UnityRelayLobbyServiceManager.Instance.OnJoinStarted += KitchenGameLobby_OnJoinStarted;
+        UnityRelayLobbyServiceManager.Instance.OnJoinFailed += KitchenGameLobby_OnJoinFailed;
+        UnityRelayLobbyServiceManager.Instance.OnQuickJoinFailed += KitchenGameLobby_OnQuickJoinFailed;
 
         Hide();
     }
@@ -71,11 +71,11 @@ public class LobbyMessageUI : MonoBehaviour {
 
     private void OnDestroy() {
         if(GameMultiplayerManager.Instance != null) GameMultiplayerManager.Instance.OnFailedToJoinGame -= KitchenGameMultiplayer_OnFailedToJoinGame;
-        GameLobbyManager.Instance.OnCreateLobbyStarted -= KitchenGameLobby_OnCreateLobbyStarted;
-        GameLobbyManager.Instance.OnCreateLobbyFailed -= KitchenGameLobby_OnCreateLobbyFailed;
-        GameLobbyManager.Instance.OnJoinStarted -= KitchenGameLobby_OnJoinStarted;
-        GameLobbyManager.Instance.OnJoinFailed -= KitchenGameLobby_OnJoinFailed;
-        GameLobbyManager.Instance.OnQuickJoinFailed -= KitchenGameLobby_OnQuickJoinFailed;
+        UnityRelayLobbyServiceManager.Instance.OnCreateLobbyStarted -= KitchenGameLobby_OnCreateLobbyStarted;
+        UnityRelayLobbyServiceManager.Instance.OnCreateLobbyFailed -= KitchenGameLobby_OnCreateLobbyFailed;
+        UnityRelayLobbyServiceManager.Instance.OnJoinStarted -= KitchenGameLobby_OnJoinStarted;
+        UnityRelayLobbyServiceManager.Instance.OnJoinFailed -= KitchenGameLobby_OnJoinFailed;
+        UnityRelayLobbyServiceManager.Instance.OnQuickJoinFailed -= KitchenGameLobby_OnQuickJoinFailed;
     }
 
 }

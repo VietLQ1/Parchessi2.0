@@ -40,7 +40,7 @@ public class CharacterSelectReadyManager : SingletonNetworkBehavior<CharacterSel
         }
 
         if (allClientsReady) {
-            GameLobbyManager.Instance.DeleteLobby();
+            UnityRelayLobbyServiceManager.Instance.DeleteLobby();
             AssetNetworkSceneManager.LoadNetworkScene(AssetSceneManager.AssetScene.GameScene.ToString());
         }
     }

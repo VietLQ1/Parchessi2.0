@@ -15,7 +15,7 @@ using Unity.Services.Relay.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameLobbyManager : PersistentSingletonNetworkBehavior<GameLobbyManager> 
+public class UnityRelayLobbyServiceManager : PersistentSingletonNetworkBehavior<UnityRelayLobbyServiceManager> 
 {
     private const string KEY_RELAY_JOIN_CODE = "RelayJoinCode";
 

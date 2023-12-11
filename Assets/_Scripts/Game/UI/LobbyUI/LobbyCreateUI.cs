@@ -14,10 +14,10 @@ public class LobbyCreateUI : MonoBehaviour
 
     private void Awake() {
         _createPublicButton.onClick.AddListener(() => {
-            GameLobbyManager.Instance.CreateLobby(_lobbyNameInputField.text, false);
+            UnityRelayLobbyServiceManager.Instance.CreateLobby(_lobbyNameInputField.text, false);
         });
         _createPrivateButton.onClick.AddListener(() => {
-            GameLobbyManager.Instance.CreateLobby(_lobbyNameInputField.text, true);
+            UnityRelayLobbyServiceManager.Instance.CreateLobby(_lobbyNameInputField.text, true);
         });
         _closeButton.onClick.AddListener(() => {
             Hide();

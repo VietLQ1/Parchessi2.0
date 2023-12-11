@@ -19,7 +19,7 @@ public class CharacterSelectUI : MonoBehaviour
 
     private void Awake() {
         _mainMenuButton.onClick.AddListener(() => {
-            GameLobbyManager.Instance.LeaveLobby();
+            UnityRelayLobbyServiceManager.Instance.LeaveLobby();
             NetworkManager.Singleton.Shutdown();
             AssetSceneManager.LoadScene(AssetSceneManager.AssetScene.MainMenuScene.ToString());
             
@@ -41,7 +41,7 @@ public class CharacterSelectUI : MonoBehaviour
     }
 
     private void Start() {
-        Lobby lobby = GameLobbyManager.Instance.GetLobby();
+        Lobby lobby = UnityRelayLobbyServiceManager.Instance.GetLobby();
 
         _lobbyNameText.text = "Lobby Name: " + lobby.Name;
         _lobbyCodeText.text = "Lobby Code: " + lobby.LobbyCode;

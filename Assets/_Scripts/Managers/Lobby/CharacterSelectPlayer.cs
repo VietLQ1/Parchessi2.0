@@ -25,7 +25,7 @@ public class CharacterSelectPlayer : MonoBehaviour
     {
         _kickButton.onClick.AddListener(() => {
             PlayerContainer playerData = GameMultiplayerManager.Instance.GetPlayerContainerFromPlayerIndex(_playerIndex);
-            GameLobbyManager.Instance.KickPlayer(playerData.PlayerID.ToString());
+            UnityRelayLobbyServiceManager.Instance.KickPlayer(playerData.PlayerID.ToString());
             GameMultiplayerManager.Instance.KickPlayer(playerData.ClientID);
         });
     }

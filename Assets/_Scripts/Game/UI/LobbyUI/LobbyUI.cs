@@ -22,7 +22,7 @@ public class LobbyUI : MonoBehaviour
 
     private void Awake() {
         _mainMenuButton.onClick.AddListener(() => {
-            GameLobbyManager.Instance.LeaveLobby();
+            UnityRelayLobbyServiceManager.Instance.LeaveLobby();
             AssetSceneManager.LoadScene(AssetSceneManager.AssetScene.MainMenuScene.ToString());
             if (AudioManager.Instance != null)
             {
@@ -40,14 +40,14 @@ public class LobbyUI : MonoBehaviour
             }
         });
         _quickJoinButton.onClick.AddListener(() => {
-            GameLobbyManager.Instance.QuickJoin();
+            UnityRelayLobbyServiceManager.Instance.QuickJoin();
             if (AudioManager.Instance != null)
             {
                 AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Click);
             }
         });
         _joinCodeButton.onClick.AddListener(() => {
-            GameLobbyManager.Instance.JoinWithCode(_joinCodeInputField.text);
+            UnityRelayLobbyServiceManager.Instance.JoinWithCode(_joinCodeInputField.text);
             if (AudioManager.Instance != null)
             {
                 AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Tab);
@@ -67,11 +67,11 @@ public class LobbyUI : MonoBehaviour
             }
         });
 
-        GameLobbyManager.Instance.OnLobbyListChanged += KitchenGameLobby_OnLobbyListChanged;
+        UnityRelayLobbyServiceManager.Instance.OnLobbyListChanged += KitchenGameLobby_OnLobbyListChanged;
         UpdateLobbyList(new List<Lobby>());
     }
 
-    private void KitchenGameLobby_OnLobbyListChanged(object sender, GameLobbyManager.OnLobbyListChangedEventArgs e) {
+    private void KitchenGameLobby_OnLobbyListChanged(object sender, UnityRelayLobbyServiceManager.OnLobbyListChangedEventArgs e) {
         UpdateLobbyList(e.LobbyList);
     }
 
@@ -89,7 +89,7 @@ public class LobbyUI : MonoBehaviour
     }
 
     private void OnDestroy() {
-        GameLobbyManager.Instance.OnLobbyListChanged -= KitchenGameLobby_OnLobbyListChanged;
+        UnityRelayLobbyServiceManager.Instance.OnLobbyListChanged -= KitchenGameLobby_OnLobbyListChanged;
     }
 
 }
