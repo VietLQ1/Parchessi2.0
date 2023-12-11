@@ -7,6 +7,8 @@ public class MenuUI : MonoBehaviour
 {
     [FormerlySerializedAs("optionMenu")] public GameObject OptionMenu;
     [FormerlySerializedAs("mainMenu")] public GameObject MainMenu;
+    public GameObject LoginMenu;
+    public GameObject RegisterMenu;
 
     public void LoadLobby()
     {
@@ -40,6 +42,50 @@ public class MenuUI : MonoBehaviour
             AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Tab);
         }
     }
+    
+    public void OnLoginOpen()
+    {
+        MainMenu.LeanScale(Vector2.zero, .3f).setEaseInBack().setOnComplete(LoginEnable);
+        LoginMenu.LeanScale(Vector2.one, 0.5f);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Click);
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Tab);
+        }
+    }
+    
+    public void OnLoginClose()
+    {
+        LoginMenu.LeanScale(Vector2.zero, .3f).setEaseInBack().setOnComplete(LoginDisable);
+        MainMenu.LeanScale(Vector2.one, 0.5f);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Click);
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Tab);
+        }
+    }
+    
+    public void OnRegisterOpen()
+    {
+        MainMenu.LeanScale(Vector2.zero, .3f).setEaseInBack().setOnComplete(RegisterEnable);
+        RegisterMenu.LeanScale(Vector2.one, 0.5f);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Click);
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Tab);
+        }
+    }
+    
+    public void OnRegisterClose()
+    {
+        RegisterMenu.LeanScale(Vector2.zero, .3f).setEaseInBack().setOnComplete(RegisterDisable);
+        MainMenu.LeanScale(Vector2.one, 0.5f);
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Click);
+            AudioManager.Instance.PlaySFX(AudioResourceManager.Instance.Tab);
+        }
+    }
 
     public void Quit()
     {
@@ -60,6 +106,30 @@ public class MenuUI : MonoBehaviour
     {
         OptionMenu.SetActive(false);
         MainMenu.SetActive(true);
+    }
+    
+    public void LoginEnable()
+    {
+        LoginMenu.SetActive(true);
+        MainMenu.SetActive(false);
+    }
+    
+    public void LoginDisable()
+    {
+        LoginMenu.SetActive(false);
+        MainMenu.SetActive(true);
+    }
+    
+    public void RegisterEnable()
+    {
+        RegisterMenu.SetActive(true);
+        LoginMenu.SetActive(false);
+    }
+    
+    public void RegisterDisable()
+    {
+        RegisterMenu.SetActive(false);
+        LoginMenu.SetActive(true);
     }
 
     public void MainMenuEnable()
