@@ -2,34 +2,38 @@
 using Unity.Services.Authentication;
 using Unity.Services.Core;
 using UnityEngine;
+using UnityUtilities;
 
 namespace _Scripts.Managers.Network
 {
-    public class UnityAuthenticationServiceManager : PersistentSingletonNetworkBehavior<UnityAuthenticationServiceManager>
+    public static class UnityAuthenticationServiceManager 
     {
-        public string PlayerName { get; set; }
-        public string PlayerId { get; set; }
-
-        protected override async void Awake()
+        public static string PlayerName { get; set; }
+        public static string PlayerId { get; set; }
+        
+        
+        private const string PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER = "PlayerNameMultiplayer";
+        
+        private static async Task InitializeUnityService(string playerName = "")
         {
-            base.Awake();
-        }
+            PlayerName = PlayerPrefs.GetString(PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER, playerName);
 
-        private async Task InitializeUnityService(string playerName = "")
-        {
+            
             if (UnityServices.State == ServicesInitializationState.Uninitialized)
             {
                 // Create a profile for player
                 InitializationOptions options = new InitializationOptions();
                 if (playerName != "") options.SetProfile(playerName);
+                if (PlayerName != "") options.SetProfile(PlayerName);
 
                 await UnityServices.InitializeAsync(options);
             }
 
         }
     
-        public async Task SignInAnonymously(string playerName = "")
+        public static async Task SignInAnonymously()
         {
+            string playerName = "PlayerName" + UnityEngine.Random.Range(100, 1000);
             await InitializeUnityService(playerName);
             
             AuthenticationService.Instance.SignedIn += () =>
@@ -42,12 +46,14 @@ namespace _Scripts.Managers.Network
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
                 PlayerId = AuthenticationService.Instance.PlayerId;
                 PlayerName = playerName;
+                
+                PlayerPrefs.SetString(PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER, playerName);
             }
         }
 
         #region UsernamePassword
         
-        public async Task SignInWithUsernamePasswordAsync(string username, string password)
+        public static async Task SignInWithUsernamePasswordAsync(string username, string password)
         {
             await InitializeUnityService(username);
          
@@ -55,6 +61,11 @@ namespace _Scripts.Managers.Network
             {
                 await AuthenticationService.Instance.SignInWithUsernamePasswordAsync(username, password);
                 Debug.Log("SignIn is successful.");
+                
+                PlayerId = AuthenticationService.Instance.PlayerId;
+                PlayerName = username;
+                
+                PlayerPrefs.SetString(PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER, username);
             }
             catch (AuthenticationException ex)
             {
@@ -72,7 +83,7 @@ namespace _Scripts.Managers.Network
             }
         }
         
-        public async Task SignUpWithUsernamePasswordAsync(string username, string password)
+        public static async Task SignUpWithUsernamePasswordAsync(string username, string password)
         {
             await InitializeUnityService(username);
          
@@ -80,6 +91,11 @@ namespace _Scripts.Managers.Network
             {
                 await AuthenticationService.Instance.SignUpWithUsernamePasswordAsync(username, password);
                 Debug.Log("SignUp is successful.");
+                
+                PlayerId = AuthenticationService.Instance.PlayerId;
+                PlayerName = username;
+                
+                PlayerPrefs.SetString(PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER, username);
             }
             catch (AuthenticationException ex)
             {
@@ -99,12 +115,13 @@ namespace _Scripts.Managers.Network
         
         #endregion
         
-        public async Task SignInWithGoogleAsync(string idToken)
+        public static async Task SignInWithGoogleAsync(string idToken)
         {
             try
             {
                 await AuthenticationService.Instance.SignInWithGoogleAsync(idToken);
                 Debug.Log("SignIn is successful.");
+                
             }
             catch (AuthenticationException ex)
             {
@@ -121,7 +138,7 @@ namespace _Scripts.Managers.Network
         
         }
 
-        public async Task SignInWithAppleAsync(string idToken)
+        public static async Task SignInWithAppleAsync(string idToken)
         {
             try
             {
@@ -142,7 +159,7 @@ namespace _Scripts.Managers.Network
             }
         }
 
-        public async Task SignInWithFacebookAsync(string accessToken)
+        public static async Task SignInWithFacebookAsync(string accessToken)
         {
             try
             {
@@ -163,7 +180,7 @@ namespace _Scripts.Managers.Network
             }
         }
 
-        public async Task SignInWithSteamAsync(string ticket)
+        public static async Task SignInWithSteamAsync(string ticket)
         {
             try
             {

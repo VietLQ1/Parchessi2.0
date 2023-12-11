@@ -11,10 +11,8 @@ using UnityEngine.SceneManagement;
 
 public class GameMultiplayerManager : PersistentSingletonNetworkBehavior<GameMultiplayerManager> 
 {
-
-
+    
     public const int MAX_PLAYER_AMOUNT = 4;
-    private const string PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER = "PlayerNameMultiplayer";
 
     
     public bool PlayMultiplayer = true;
@@ -28,14 +26,11 @@ public class GameMultiplayerManager : PersistentSingletonNetworkBehavior<GameMul
 
 
     private NetworkList<PlayerContainer> _playerContainerNetworkList;
-    private string _playerName;
-
 
     protected override void Awake() {
         base.Awake();
         
-        _playerName = PlayerPrefs.GetString(PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER, "PlayerName" + UnityEngine.Random.Range(100, 1000));
-
+        
         _playerContainerNetworkList = new NetworkList<PlayerContainer>();
         _playerContainerNetworkList.OnListChanged += PlayerContainerNetworkList_OnListChanged;
     }
@@ -48,14 +43,15 @@ public class GameMultiplayerManager : PersistentSingletonNetworkBehavior<GameMul
         }
     }
 
-    public string GetPlayerName() {
-        return _playerName;
+    public string GetPlayerName()
+    {
+        return UnityAuthenticationServiceManager.PlayerName;
+
     }
 
     public void SetPlayerName(string playerName) {
-        this._playerName = playerName;
+        // this._playerName = playerName;
 
-        PlayerPrefs.SetString(PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER, playerName);
     }
 
     private void PlayerContainerNetworkList_OnListChanged(NetworkListEvent<PlayerContainer> changeEvent) {

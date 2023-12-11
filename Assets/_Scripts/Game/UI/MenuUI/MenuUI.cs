@@ -144,7 +144,7 @@ public class MenuUI : MonoBehaviour
         MainMenu.SetActive(false);
     }
 
-    public void Play()
+    private void Play()
     {
         AssetSceneManager.LoadScene(AssetSceneManager.AssetScene.LobbyScene.ToString());
         if (AudioManager.Instance != null)

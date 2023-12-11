@@ -50,9 +50,10 @@ namespace _Scripts.UI.GameUI
             }
         }
         
-        public void ResetTimer(float maxTime, Action onTimerComplete)
+        public void ResetTimer(float maxTime, Action onTimerComplete, float currentTime = -1)
         {
             _maxTime = maxTime;
+            _currentTime = currentTime < 0 ? _currentTime : Mathf.Min(currentTime,maxTime);
             OnTimerComplete = onTimerComplete;
         
             
