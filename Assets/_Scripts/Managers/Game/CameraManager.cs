@@ -14,7 +14,9 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager>
     private Vector3 _lastMousePosition;
     public bool IsDraggingMouse = false;
 
-    [Header("Zoom")] [SerializeField] private float _zoomSpeed = 20f; // Speed of camera zooming
+    [Header("Zoom")] 
+    [SerializeField] private bool _canZoom = true;
+    [SerializeField] private float _zoomSpeed = 20f; // Speed of camera zooming
     [SerializeField] private RangeFloat _zoomBound = new RangeFloat(5f, 20f); // distance for zooming
     private float _originZoomDistance;
 
@@ -51,7 +53,8 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager>
             DragCamera();
         }
 
-        HandleZooming();
+        if (_canZoom) 
+            HandleZooming();
     }
 
 
@@ -104,6 +107,10 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager>
         }
     }
 
+    public void SetActiveZoom(bool isActive)
+    {
+        _canZoom = isActive;
+    }
 
     public void FocusOnGameObject(GameObject targetGameObject)
     {

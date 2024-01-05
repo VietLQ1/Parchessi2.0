@@ -52,7 +52,6 @@ namespace _Scripts.Managers.Game
             GameManager.Instance.OnPlayerPhaseChanged += ChangePhaseHand;
         }
 
-
         private void Update()
         {
             if (_isDiceHandInteractable)
@@ -90,6 +89,8 @@ namespace _Scripts.Managers.Game
                 
                 HidePlayerHand(playerController);
             }
+
+            CameraManager.Instance.SetActiveZoom(true);
         }
         
         private void ChangePhaseHand(PlayerTurnController.PlayerPhase oldValue, PlayerTurnController.PlayerPhase newValue, PlayerController playerController)
