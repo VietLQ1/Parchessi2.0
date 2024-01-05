@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using _Scripts.Map;
+using UnityEngine;
 
 namespace _Scripts.Scriptable_Objects
 {
@@ -11,5 +12,8 @@ namespace _Scripts.Scriptable_Objects
         
         public CardPaletteDescription ChampionPaletteDescription;
         public DeckDescription DeckDescription;
+        
+        public MapHomeRegion MapHomeRegionPrefab;
+        
     }
 }

@@ -36,6 +36,21 @@ namespace _Scripts.Managers.Game
             _pawnStatEffectContainers = new NetworkList<PawnStatEffectContainer>();
             
             GameManager.Instance.OnPlayerTurnStart += UpdateStatEffect;
+
+        }
+
+        public void LoadInitialMap(PlayerContainer[] playerContainers)
+        {
+            foreach (var playerContainer in playerContainers)
+            {
+                var championDescription = GameResourceManager.Instance.GetChampionDescription(playerContainer.ChampionID);
+
+                _mapRegion.CreateCharacterMap(playerContainer.ClientID, championDescription.MapHomeRegionPrefab);
+                
+            }
+            
+            _mapRegion.CreateLeftoverDefaultCharacterMap();
+            
         }
 
         private void UpdateStatEffect(PlayerController obj)

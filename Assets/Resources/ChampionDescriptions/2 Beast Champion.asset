@@ -17,3 +17,4 @@ MonoBehaviour:
   ChampionSprite: {fileID: 21300000, guid: 82c8e554e4fc8cb4789aaf9c4f721820, type: 3}
   ChampionPaletteDescription: {fileID: 11400000, guid: cb0d70e5f96d1e041980a5b52f5185dd, type: 2}
   DeckDescription: {fileID: 11400000, guid: 25f5934d1df4c3f42936b6833ee72363, type: 2}
+  MapHomeRegionPrefab: {fileID: 8775438988101358461, guid: 9ff6a6e602fe1df4cbf0e84f7d46995d, type: 3}

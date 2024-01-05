@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using _Scripts.Managers.Game;
 using _Scripts.Managers.Network;
 using _Scripts.NetworkContainter;
 using _Scripts.Scriptable_Objects;
@@ -181,6 +182,7 @@ public class GameManager : SingletonNetworkBehavior<GameManager>
                 Debug.Log($"CardDraw {cardDescription.CardID} : ");
             }
         }
+        
     }
 
     private void LoadPlayerSetupFromDeckDescription()
@@ -232,6 +234,7 @@ public class GameManager : SingletonNetworkBehavior<GameManager>
             }
         }
         
+        MapManager.Instance.LoadInitialMap(playerContainers);
     }
 
     [ServerRpc]
