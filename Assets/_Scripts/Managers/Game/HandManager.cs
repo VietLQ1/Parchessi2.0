@@ -90,7 +90,6 @@ namespace _Scripts.Managers.Game
                 HidePlayerHand(playerController);
             }
 
-            CameraManager.Instance.SetActiveZoom(true);
         }
         
         private void ChangePhaseHand(PlayerTurnController.PlayerPhase oldValue, PlayerTurnController.PlayerPhase newValue, PlayerController playerController)

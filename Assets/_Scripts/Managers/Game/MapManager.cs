@@ -36,8 +36,8 @@ namespace _Scripts.Managers.Game
             _pawnStatEffectContainers = new NetworkList<PawnStatEffectContainer>();
             
             GameManager.Instance.OnPlayerTurnStart += UpdateStatEffect;
-
         }
+        
 
         public void LoadInitialMap(PlayerContainer[] playerContainers)
         {
