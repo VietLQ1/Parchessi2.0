@@ -117,7 +117,7 @@ MonoBehaviour:
   _middleAlignDuration: 0.125
   _middleAlignEase: 9
   _addCardSfx: {fileID: 0}
-  _dragCardSfx: {fileID: 0}
+  _dragHandSfx: {fileID: 0}
 --- !u!114 &4586256182373145385
 MonoBehaviour:
   m_ObjectHideFlags: 0
