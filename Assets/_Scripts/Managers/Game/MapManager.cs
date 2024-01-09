@@ -6,6 +6,7 @@ using _Scripts.Map;
 using _Scripts.NetworkContainter;
 using _Scripts.Player.Dice;
 using _Scripts.Player.Pawn;
+using _Scripts.Scriptable_Objects;
 using _Scripts.Simulation;
 using QFSW.QC;
 using Unity.Netcode;
@@ -39,18 +40,43 @@ namespace _Scripts.Managers.Game
         }
         
 
-        public void LoadInitialMap(PlayerContainer[] playerContainers)
+        [ServerRpc]
+        public void LoadInitialMapServerRPC(PlayerContainer[] playerContainers)
         {
+            // Load Map Home Region
             foreach (var playerContainer in playerContainers)
             {
                 var championDescription = GameResourceManager.Instance.GetChampionDescription(playerContainer.ChampionID);
-
+            
                 _mapRegion.CreateCharacterMap(playerContainer.ClientID, championDescription.MapHomeRegionPrefab);
+                
+                
                 
             }
             
             _mapRegion.CreateLeftoverDefaultCharacterMap();
             
+            LoadInitialMapClientRPC(playerContainers);
+            
+        }
+
+        [ClientRpc]
+        public void LoadInitialMapClientRPC(PlayerContainer[] playerContainers)
+        {
+            // Load Map Home Region
+            foreach (var playerContainer in playerContainers)
+            {
+                var championDescription = GameResourceManager.Instance.GetChampionDescription(playerContainer.ChampionID);
+            
+                foreach (PawnCardDescription pawnCardDescription in championDescription.DeckDescription.PawnCardDescriptions)
+                {
+                    SpawnPawnToMap(pawnCardDescription.PawnDescription, playerContainer.ClientID);
+                }
+                
+            }
+            
+            _mapRegion.CreateLeftoverDefaultCharacterMap();
+
         }
 
         private void UpdateStatEffect(PlayerController obj)
@@ -77,11 +103,11 @@ namespace _Scripts.Managers.Game
             return _playerEmptyTarget;
         }
 
-        public void SpawnPawnToMap(PawnDescription pawnDescription, ulong ownerClientId)
+        public void SpawnPawnToMap(PawnDescription pawnDescription, ulong ownerClientId, int standingMapCell = -1)
         {
             var pawnContainer = pawnDescription.GetPawnContainer();
             pawnContainer.ClientOwnerID = ownerClientId;
-            pawnContainer.StandingMapCell = 0;
+            pawnContainer.StandingMapCell = standingMapCell;
             
             SpawnPawnToMapServerRPC(pawnContainer, ownerClientId);
         }
@@ -90,10 +116,21 @@ namespace _Scripts.Managers.Game
         {
             var pawnDescription = GameResourceManager.Instance.GetPawnDescription(pawnContainer.PawnID);
             var mapPath = _mapRegion.GetMapPath((int)ownerClientId);
-            Transform spawnTransform = mapPath.Path[0].transform;
+            var mapHomeRegion = _mapRegion.GetMapHomeRegion(ownerClientId);
+            
+            Transform spawnTransform;
+            if (pawnContainer.StandingMapCell == -1)
+            {
+                spawnTransform = mapHomeRegion.GetSpawnPoint();
+            }
+            else
+            {
+                spawnTransform = mapPath.Path[pawnContainer.StandingMapCell].transform;
+            }
+            
             var mapPawn = Instantiate(pawnDescription.GetMapPawnPrefab(), spawnTransform.position, spawnTransform.rotation, _mapRegion.transform);
             
-            mapPawn.Initialize(mapPath, pawnDescription,  pawnContainerIndex, ownerClientId);
+            mapPawn.Initialize(mapPath, mapHomeRegion, pawnDescription,  pawnContainerIndex, ownerClientId);
             
             return mapPawn;
         }

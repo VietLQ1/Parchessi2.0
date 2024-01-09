@@ -16,6 +16,7 @@ namespace _Scripts.Player.Pawn
     {
         protected MapManager MapManager => MapManager.Instance;
         protected MapPath MapPath;
+        protected MapHomeRegion MapHomeRegion;
         public PawnDescription PawnDescription { get; protected set; }
 
         public int StandingMapCellIndex = 0;
@@ -25,9 +26,10 @@ namespace _Scripts.Player.Pawn
         public ObservableData<int> CurrentHealth = new();
         public ObservableData<int> MovementSpeed = new();
 
-        public virtual void Initialize(MapPath playerMapPawn, PawnDescription pawnDescription , int containerIndex, ulong ownerClientId)
+        public virtual void Initialize(MapPath playerMapPawn, MapHomeRegion mapHomeRegion, PawnDescription pawnDescription , int containerIndex, ulong ownerClientId)
         {
             MapPath = playerMapPawn;
+            MapHomeRegion = mapHomeRegion;
             PawnDescription = pawnDescription;
 
             Initialize(containerIndex, ownerClientId);

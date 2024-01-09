@@ -42,6 +42,19 @@ public class MapRegion : MonoBehaviour
         return null;
     }
     
+    public MapHomeRegion GetMapHomeRegion(ulong characterId)
+    {
+        if (_mapHomeRegions.TryGetValue(characterId, out var region))
+        {
+            return region.MapHomeRegion;
+        }
+        else
+        {
+            Debug.LogError("CharacterId not found");
+        }
+        return null;
+    }
+    
     
     public void CreateCharacterMap(ulong id, MapHomeRegion mapHomeRegionPrefab)
     {

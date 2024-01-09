@@ -165,9 +165,6 @@ public class GameManager : SingletonNetworkBehavior<GameManager>
         
         CameraManager.Instance.SetActiveZoom(true);
 
-        MapManager.Instance.LoadInitialMap(GameMultiplayerManager.Instance != null
-            ? GameMultiplayerManager.Instance.GetAllPlayerContainer()
-            : new[] { PlayerContainer.CreateMockPlayerContainer(0)  });
     }
 
     private void LoadPlayerSetupFromGameManager()
@@ -240,7 +237,7 @@ public class GameManager : SingletonNetworkBehavior<GameManager>
             }
         }
         
-        MapManager.Instance.LoadInitialMap(playerContainers);
+        MapManager.Instance.LoadInitialMapServerRPC(playerContainers);
     }
 
     [ServerRpc]
