@@ -16,7 +16,8 @@ public class PawnHandCard : HandCard
     public ObservableData<int> Attack = new ObservableData<int>();
     public ObservableData<int> MaxHealth = new ObservableData<int>();
     public ObservableData<int> Speed = new ObservableData<int>();
-    
+
+    private int _pawnContainerIndex;
 
     protected override void InitializeCardDescription(CardDescription cardDescription)
     {
@@ -36,6 +37,35 @@ public class PawnHandCard : HandCard
         Attack.Value = PawnDescription.PawnAttackDamage;
         MaxHealth.Value = PawnDescription.PawnMaxHealth;
         Speed.Value = PawnDescription.PawnMovementSpeed;
+        
+        _pawnContainerIndex = MapManager.Instance.FindPawnContainerIndex(PawnDescription.GetPawnContainer());
+    }
+
+    public override bool CheckTargeteeValid(ITargetee targetee)
+    {
+        if (targetee is PlayerEmptyTarget playerEmptyTarget)
+        {
+            var pawn = GetPawn();
+                        
+            if (pawn != null) 
+                return ((MapPawn)pawn).TryDepart();
+        }
+
+        return false;
+    }
+
+    private MapPawn GetPawn()
+    {
+        return (MapPawn) ActionManager.Instance.FindTargetEntity((iTargeteeToFind) =>
+        {
+            if (iTargeteeToFind is MapPawn mapPawn)
+            {
+                return mapPawn.ContainerIndex == _pawnContainerIndex;
+            }
+
+            return false;
+        });
+
     }
     
     public override SimulationPackage ExecuteTargeter<TTargetee>(TTargetee targetee)
@@ -50,19 +80,13 @@ public class PawnHandCard : HandCard
                 // Inherit this class and write CardDraw effect
                 Debug.Log(name + " CardDraw drag to Empty ");
                 PlayerCardHand.PlayCard(this);
-
-                MapManager.Instance.SpawnPawnToMap(PawnDescription, OwnerClientID);
-
-                Destroy();
-            }
-            else if (targetee is MapPawn playerPawn)
-            {
-                // Inherit this class and write CardDraw effect
-                Debug.Log(name + " CardDraw drag to Pawn " + playerPawn.name);
-                PlayerCardHand.PlayCard(this);
+                
+                
+                MapManager.Instance.DepartPawnServerRPC(_pawnContainerIndex);
 
                 Destroy();
             }
+            
         });
 
 

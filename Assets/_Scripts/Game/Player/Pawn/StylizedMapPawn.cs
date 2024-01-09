@@ -23,6 +23,41 @@ namespace _Scripts.Player.Pawn
             return transform.DOMove(position.position, _moveDuration).SetEase(_moveEase);
         }
         
+        
+        public override SimulationPackage Depart()
+        {
+            var simulationPackage = new SimulationPackage();
+            
+            if (TryDepart())
+            {
+                simulationPackage.AddToPackage(() =>
+                {
+                    // Depart
+                    StandingMapCellIndex = 0;
+                    
+                    _skeletonAnimationController.DoMoveAnim();
+                    CurrentPawnMapPosition.Value = PawnMapPosition.OnPath;
+                });
+
+                simulationPackage.AddToPackage(MoveTween(MapPath.Path[0].GetEmptySpot()));
+                
+                simulationPackage.AddToPackage(() =>
+                {
+                    
+                    _skeletonAnimationController.DoIdleAnim();
+                    MapPath.Path[0].EnterPawn(this);
+                    
+                });
+            }
+            else
+            {
+                
+            }
+            
+            
+            return simulationPackage;
+        }
+        
         public override SimulationPackage StartMove(int startMapCellIndex, int stepCount)
         {
             var simulationPackage = new SimulationPackage();
@@ -59,6 +94,7 @@ namespace _Scripts.Player.Pawn
                 simulationPackage.AddToPackage(() =>
                 {
                     // End move
+                    
                     MapManager.EndMovePawnServerRPC(ContainerIndex, StandingMapCellIndex);
                 });
             }
@@ -110,11 +146,11 @@ namespace _Scripts.Player.Pawn
                 _skeletonAnimationController.DoHurtAnim();
                 if (CurrentHealth.Value <= 0)
                 {
-                    // Die
+                    // DieThenRespawn
 
                     MapPath.Path[StandingMapCellIndex].RemovePawn(this);
 
-                    MapManager.RemovePawnFromMapServerRPC(ContainerIndex);
+                    MapManager.RespawnPawnToHomeServerRPC(ContainerIndex);
 
                 }
             });

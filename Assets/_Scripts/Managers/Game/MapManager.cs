@@ -43,27 +43,8 @@ namespace _Scripts.Managers.Game
         [ServerRpc]
         public void LoadInitialMapServerRPC(PlayerContainer[] playerContainers)
         {
-            // Load Map Home Region
-            foreach (var playerContainer in playerContainers)
-            {
-                var championDescription = GameResourceManager.Instance.GetChampionDescription(playerContainer.ChampionID);
-            
-                _mapRegion.CreateCharacterMap(playerContainer.ClientID, championDescription.MapHomeRegionPrefab);
-                
-                
-                
-            }
-            
-            _mapRegion.CreateLeftoverDefaultCharacterMap();
-            
-            LoadInitialMapClientRPC(playerContainers);
-            
-        }
+            CreateHomeMapClientRPC(playerContainers);
 
-        [ClientRpc]
-        public void LoadInitialMapClientRPC(PlayerContainer[] playerContainers)
-        {
-            // Load Map Home Region
             foreach (var playerContainer in playerContainers)
             {
                 var championDescription = GameResourceManager.Instance.GetChampionDescription(playerContainer.ChampionID);
@@ -72,6 +53,21 @@ namespace _Scripts.Managers.Game
                 {
                     SpawnPawnToMap(pawnCardDescription.PawnDescription, playerContainer.ClientID);
                 }
+                
+            }
+            
+        }
+
+        [ClientRpc]
+        private void CreateHomeMapClientRPC(PlayerContainer[] playerContainers)
+        {
+            
+            // Load Map Home Region
+            foreach (var playerContainer in playerContainers)
+            {
+                var championDescription = GameResourceManager.Instance.GetChampionDescription(playerContainer.ChampionID);
+            
+                _mapRegion.CreateCharacterMap(playerContainer.ClientID, championDescription.MapHomeRegionPrefab);
                 
             }
             
@@ -103,7 +99,24 @@ namespace _Scripts.Managers.Game
             return _playerEmptyTarget;
         }
 
-        public void SpawnPawnToMap(PawnDescription pawnDescription, ulong ownerClientId, int standingMapCell = -1)
+        public int FindPawnContainerIndex(PawnContainer pawnContainer)
+        {
+            for (var index = 0; index < _mapPawnContainers.Count; index++)
+            {
+                var mapPawnContainer = _mapPawnContainers[index];
+                if (mapPawnContainer.Equals(pawnContainer))
+                {
+                    return index;
+                }
+            }
+            
+            Debug.LogError("PawnContainer not found");
+
+            return -1;
+            
+        }
+        
+        private void SpawnPawnToMap(PawnDescription pawnDescription, ulong ownerClientId, int standingMapCell = -1)
         {
             var pawnContainer = pawnDescription.GetPawnContainer();
             pawnContainer.ClientOwnerID = ownerClientId;
@@ -130,7 +143,7 @@ namespace _Scripts.Managers.Game
             
             var mapPawn = Instantiate(pawnDescription.GetMapPawnPrefab(), spawnTransform.position, spawnTransform.rotation, _mapRegion.transform);
             
-            mapPawn.Initialize(mapPath, mapHomeRegion, pawnDescription,  pawnContainerIndex, ownerClientId);
+            mapPawn.Initialize(mapPath, mapHomeRegion, pawnDescription,  pawnContainerIndex, ownerClientId, pawnContainer.StandingMapCell);
             
             return mapPawn;
         }
@@ -174,7 +187,7 @@ namespace _Scripts.Managers.Game
         }
         
         [ServerRpc(RequireOwnership = false)]
-        public void RemovePawnFromMapServerRPC(int pawnContainerIndex, ServerRpcParams serverRpcParams = default)
+        public void DepartPawnServerRPC(int pawnContainerIndex, ServerRpcParams serverRpcParams = default)
         {
             var clientId = serverRpcParams.Receive.SenderClientId;
             if (!NetworkManager.ConnectedClients.ContainsKey(clientId)) return;
@@ -183,17 +196,44 @@ namespace _Scripts.Managers.Game
             if (mapPawnContainer.ClientOwnerID != clientId) return;
             //if (NetworkManager.ServerClientId != clientId) return;
             
-            _mapPawnContainers[pawnContainerIndex] = EmptyPawnContainer;
+            mapPawnContainer.StandingMapCell = 0;
+            _mapPawnContainers[pawnContainerIndex] = mapPawnContainer;
             
-            RemovePawnFromMapClientRPC(pawnContainerIndex);
+            DepartPawnClientRPC(pawnContainerIndex);
         }
         
         [ClientRpc]
-        public void RemovePawnFromMapClientRPC(int pawnContainerIndex)
+        public void DepartPawnClientRPC(int pawnContainerIndex)
         {
             var mapPawn = GetPlayerPawn(pawnContainerIndex);
-            _containerIndexToMapPawnDictionary.Remove(pawnContainerIndex);
-            SimulationManager.Instance.AddSimulationPackage(mapPawn.Die());
+            
+            SimulationManager.Instance.AddSimulationPackage(mapPawn.Depart());
+        }
+        
+        
+        [ServerRpc(RequireOwnership = false)]
+        public void RespawnPawnToHomeServerRPC(int pawnContainerIndex, ServerRpcParams serverRpcParams = default)
+        {
+            var clientId = serverRpcParams.Receive.SenderClientId;
+            if (!NetworkManager.ConnectedClients.ContainsKey(clientId)) return;
+            
+            var mapPawnContainer = _mapPawnContainers[pawnContainerIndex];
+            if (mapPawnContainer.ClientOwnerID != clientId) return;
+            //if (NetworkManager.ServerClientId != clientId) return;
+            
+            mapPawnContainer.StandingMapCell = -1;
+            
+            _mapPawnContainers[pawnContainerIndex] = mapPawnContainer;
+            
+            RespawnPawnToHomeClientRPC(pawnContainerIndex);
+        }
+        
+        [ClientRpc]
+        public void RespawnPawnToHomeClientRPC(int pawnContainerIndex)
+        {
+            var mapPawn = GetPlayerPawn(pawnContainerIndex);
+            
+            SimulationManager.Instance.AddSimulationPackage(mapPawn.DieThenRespawn());
         }
 
         [ServerRpc(RequireOwnership = false)]

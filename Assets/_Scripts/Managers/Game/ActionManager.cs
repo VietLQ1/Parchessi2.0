@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using _Scripts.Managers.Game;
 using _Scripts.NetworkContainter;
 using _Scripts.Player.Dice;
@@ -20,6 +21,11 @@ public class ActionManager : SingletonMonoBehaviour<ActionManager>
     public void AddTargetEntity(ITargetee targetEntity)
     {
         _mapTargets.Add(targetEntity);
+    }
+    
+    public ITargetee FindTargetEntity(Func<ITargetee, bool> targeteeCondition)
+    {
+        return _mapTargets.FirstOrDefault(targeteeCondition.Invoke);
     }
     
     public void RemoveTargetEntity(ITargetee targetEntity)

@@ -19,18 +19,22 @@ namespace _Scripts.Player.Pawn
         protected MapHomeRegion MapHomeRegion;
         public PawnDescription PawnDescription { get; protected set; }
 
-        public int StandingMapCellIndex = 0;
+        public int StandingMapCellIndex { get; protected set; }
 
         public ObservableData<int> AttackDamage = new ();
         public ObservableData<int> MaxHealth = new();
         public ObservableData<int> CurrentHealth = new();
         public ObservableData<int> MovementSpeed = new();
-
-        public virtual void Initialize(MapPath playerMapPawn, MapHomeRegion mapHomeRegion, PawnDescription pawnDescription , int containerIndex, ulong ownerClientId)
+        public ObservableData<PawnMapPosition> CurrentPawnMapPosition = new(Pawn.PawnMapPosition.AtHome);
+        
+        public virtual void Initialize(MapPath playerMapPawn, MapHomeRegion mapHomeRegion, PawnDescription pawnDescription , int containerIndex, ulong ownerClientId, int standingMapCellIndex = 0)
         {
             MapPath = playerMapPawn;
             MapHomeRegion = mapHomeRegion;
             PawnDescription = pawnDescription;
+            StandingMapCellIndex = standingMapCellIndex;
+
+            CurrentPawnMapPosition.Value = standingMapCellIndex == -1 ? PawnMapPosition.AtHome : PawnMapPosition.OnPath;
 
             Initialize(containerIndex, ownerClientId);
             LoadPawnDescription();
@@ -44,10 +48,10 @@ namespace _Scripts.Player.Pawn
             MovementSpeed.Value = PawnDescription.PawnMovementSpeed;
         }
 
-        
-
         public virtual bool TryMove(int stepCount)
         {
+            if (CurrentPawnMapPosition.Value != PawnMapPosition.OnPath) return false;
+            
             int startMapCellIndex = StandingMapCellIndex;
             int endMapCellIndex = stepCount + startMapCellIndex;
 
@@ -85,6 +89,49 @@ namespace _Scripts.Player.Pawn
 
             return emptySlot; // If there is an empty slot, the attacker can move to that slot
         }
+
+        public virtual bool TryDepart()
+        {
+            //if (CurrentPawnMapPosition.Value != PawnMapPosition.AtHome) return false;
+            
+            int startMapCellIndex = StandingMapCellIndex;
+            
+            var mapCell = MapPath.Path[0];
+
+            return mapCell.CheckEnterable();
+             
+        }
+        
+        public virtual SimulationPackage Depart()
+        {
+            var simulationPackage = new SimulationPackage();
+            
+            if (TryDepart())
+            {
+                simulationPackage.AddToPackage(() =>
+                {
+                    // Depart
+                    CurrentPawnMapPosition.Value = PawnMapPosition.OnPath;
+                });
+                
+                simulationPackage.AddToPackage(() =>
+                {
+                    // Teleport to the Start path
+                    StandingMapCellIndex = 0;
+                    MapPath.Path[0].EnterPawn(this);
+
+                    transform.position = MapPath.Path[StandingMapCellIndex].GetEmptySpot().transform.position; 
+
+                });
+            }
+            else
+            {
+                
+            }
+            
+            
+            return simulationPackage;
+        }
         
         public virtual SimulationPackage StartMove(int startMapCellIndex, int stepCount)
         {
@@ -96,7 +143,8 @@ namespace _Scripts.Player.Pawn
                 simulationPackage.AddToPackage(()=> 
                 {
                     // Start move
-                    MapPath.Path[startMapCellIndex].RemovePawn(this);
+                    if (startMapCellIndex != -1) // If the pawn is not at home
+                        MapPath.Path[startMapCellIndex].RemovePawn(this);
                     
                     for (int step = 1; step < stepCount; step++)
                     {
@@ -196,11 +244,11 @@ namespace _Scripts.Player.Pawn
                 
                 if (CurrentHealth.Value <= 0)
                 {
-                    // Die
+                    // DieThenRespawn
                     
                     MapPath.Path[StandingMapCellIndex].RemovePawn(this);
                     
-                    MapManager.RemovePawnFromMapServerRPC(ContainerIndex);
+                    MapManager.RespawnPawnToHomeServerRPC(ContainerIndex);
                     
                 }
             });
@@ -208,15 +256,17 @@ namespace _Scripts.Player.Pawn
             return simulationPacket;
         }
         
-        
-        public virtual SimulationPackage Die()
+        public virtual SimulationPackage DieThenRespawn()
         {
             var simulationPacket = new SimulationPackage();
             
             simulationPacket.AddToPackage(() =>
             {
-                // Die Animation
-                Destroy(gameObject);
+                CurrentPawnMapPosition.Value = PawnMapPosition.AtHome;
+                
+                Debug.Log("DieThenRespawn!");
+                // TODO animation for die and respawn
+                
             });
             
             return simulationPacket;
@@ -228,9 +278,13 @@ namespace _Scripts.Player.Pawn
             
             simulationPacket.AddToPackage(() =>
             {
-                // Fun Animation
+                
                 Debug.Log("Reach Goal!");
                 MapPath.Path[StandingMapCellIndex].RemovePawn(this);
+                
+                CurrentPawnMapPosition.Value = PawnMapPosition.OnGoal;
+                // TODO animation for reaching goal
+                
             });
             
             return simulationPacket;
