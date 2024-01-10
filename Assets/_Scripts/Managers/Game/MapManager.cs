@@ -51,7 +51,12 @@ namespace _Scripts.Managers.Game
             
                 foreach (PawnCardDescription pawnCardDescription in championDescription.DeckDescription.PawnCardDescriptions)
                 {
-                    SpawnPawnToMap(pawnCardDescription.PawnDescription, playerContainer.ClientID);
+                    var pawnContainer = pawnCardDescription.PawnDescription.GetPawnContainer();
+                    pawnContainer.ClientOwnerID = playerContainer.ClientID;
+                    pawnContainer.StandingMapCell = -1;
+            
+                    SpawnPawnToMapServerRPC(pawnContainer);
+                    
                 }
                 
             }
@@ -116,20 +121,11 @@ namespace _Scripts.Managers.Game
             
         }
         
-        private void SpawnPawnToMap(PawnDescription pawnDescription, ulong ownerClientId, int standingMapCell = -1)
-        {
-            var pawnContainer = pawnDescription.GetPawnContainer();
-            pawnContainer.ClientOwnerID = ownerClientId;
-            pawnContainer.StandingMapCell = standingMapCell;
-            
-            SpawnPawnToMapServerRPC(pawnContainer, ownerClientId);
-        }
-        
-        private MapPawn CreateMapPawn(PawnContainer pawnContainer, int pawnContainerIndex, ulong ownerClientId)
+        private MapPawn CreateMapPawn(PawnContainer pawnContainer, int pawnContainerIndex)
         {
             var pawnDescription = GameResourceManager.Instance.GetPawnDescription(pawnContainer.PawnID);
-            var mapPath = _mapRegion.GetMapPath((int)ownerClientId);
-            var mapHomeRegion = _mapRegion.GetMapHomeRegion(ownerClientId);
+            var mapPath = _mapRegion.GetMapPath((int)pawnContainer.ClientOwnerID);
+            var mapHomeRegion = _mapRegion.GetMapHomeRegion(pawnContainer.ClientOwnerID);
             
             Transform spawnTransform;
             if (pawnContainer.StandingMapCell == -1)
@@ -143,20 +139,19 @@ namespace _Scripts.Managers.Game
             
             var mapPawn = Instantiate(pawnDescription.GetMapPawnPrefab(), spawnTransform.position, spawnTransform.rotation, _mapRegion.transform);
             
-            mapPawn.Initialize(mapPath, mapHomeRegion, pawnDescription,  pawnContainerIndex, ownerClientId, pawnContainer.StandingMapCell);
+            mapPawn.Initialize(mapPath, mapHomeRegion, pawnDescription,  pawnContainerIndex, pawnContainer.ClientOwnerID, pawnContainer.StandingMapCell);
             
             return mapPawn;
         }
 
 
         [ServerRpc(RequireOwnership = false)]
-        private void SpawnPawnToMapServerRPC(PawnContainer pawnContainer, ulong ownerClientId, ServerRpcParams serverRpcParams = default)
+        private void SpawnPawnToMapServerRPC(PawnContainer pawnContainer, ServerRpcParams serverRpcParams = default)
         {
             var clientId = serverRpcParams.Receive.SenderClientId;
             if (!NetworkManager.ConnectedClients.ContainsKey(clientId)) return;
 
-            //if (NetworkManager.ServerClientId != clientId) return;
-            if (ownerClientId != clientId) return;
+            if (NetworkManager.ServerClientId != clientId) return;
             
             foreach (var mapPawnContainer in _mapPawnContainers)
             {
@@ -173,16 +168,16 @@ namespace _Scripts.Managers.Game
                 if (mapPawnContainer.Equals(EmptyPawnContainer))
                 {
                     _mapPawnContainers[index] = pawnContainer;
-                    SpawnPawnToMapClientRPC(pawnContainer, index, ownerClientId);
+                    SpawnPawnToMapClientRPC(pawnContainer, index);
                     break;
                 }
             }
         }
 
         [ClientRpc]
-        private void SpawnPawnToMapClientRPC(PawnContainer pawnContainer, int containerIndex, ulong ownerClientId)
+        private void SpawnPawnToMapClientRPC(PawnContainer pawnContainer, int containerIndex)
         {
-            var mapPawn = CreateMapPawn(pawnContainer, containerIndex, ownerClientId);
+            var mapPawn = CreateMapPawn(pawnContainer, containerIndex);
             _containerIndexToMapPawnDictionary.Add(containerIndex, mapPawn);
         }
         

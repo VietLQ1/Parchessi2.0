@@ -38,7 +38,9 @@ public class PawnHandCard : HandCard
         MaxHealth.Value = PawnDescription.PawnMaxHealth;
         Speed.Value = PawnDescription.PawnMovementSpeed;
         
-        _pawnContainerIndex = MapManager.Instance.FindPawnContainerIndex(PawnDescription.GetPawnContainer());
+        var pawnContainer = PawnDescription.GetPawnContainer();
+        pawnContainer.ClientOwnerID = OwnerClientID;
+        _pawnContainerIndex = MapManager.Instance.FindPawnContainerIndex(pawnContainer);
     }
 
     public override bool CheckTargeteeValid(ITargetee targetee)
