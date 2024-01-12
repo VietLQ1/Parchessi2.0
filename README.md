@@ -9,7 +9,8 @@ The project was developed with the graphical designed using figma and game engin
 To install build and run the project follow these step
 
 1. clone this github repository
-2. do st... điền giúp t i :)
+2. open the project in Unity Editor (preferably with Unity 2021.3.21f)
+3. if you wish to build the game and test it, go to File->Build And Run or use the Ctrl-B shorcut
 
 ## Contribution
 If you are interested in making contributions to our project, you can do the following steps:
