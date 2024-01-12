@@ -70,6 +70,12 @@ public class GameResourceManager : PersistentSingletonMonoBehaviour<GameResource
         }
     }
 
+    public CardDescription[] GetAllCardDescriptions()
+    {
+        CardDescription[] cardDescriptions = Resources.LoadAll<CardDescription>(CARD_DESCRIPTIONS_PATH);
+        return cardDescriptions;
+    }
+
     public CardDescription GetCardDescription(int cardID)
     {
         if (_cardDescriptionsDictionary.TryGetValue(cardID, out CardDescription cardDescription))

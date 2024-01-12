@@ -35,6 +35,8 @@ public class HandCard : PlayerEntity, ITargeter
         InitializeCardDescription(cardDescription);
         InitializeCardFace();
         
+        OnInitialize?.Invoke();
+        OnInitialize = null;
     }
 
     protected virtual void InitializeCardDescription(CardDescription cardDescription)
@@ -52,11 +54,6 @@ public class HandCard : PlayerEntity, ITargeter
         }
     }
     
-    private void Start()
-    {
-        OnInitialize?.Invoke();
-        OnInitialize = null;
-    }
 
     public virtual bool CheckTargeteeValid(ITargetee targetee)
     {
