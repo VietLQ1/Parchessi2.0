@@ -5,12 +5,18 @@
 
 The project was developed with the graphical designed using figma and game engine using **Unity** in combination with Unity service, mysql and Microsoft Azure for backend data storing and authentication.
 
+## Demo
+Youtube : https://youtu.be/h62QCPjr55s
+Report : [Programming Intergration Project - Parchaxie v1.2_compressed.pdf](https://github.com/ShunPeng1/Parchessi2.0/files/14318231/Programming.Intergration.Project.-.Parchaxie.v1.2_compressed.pdf)
+
+
 ## Installation guide
 To install build and run the project follow these step
 
 1. clone this github repository
 2. open the project in Unity Editor (preferably with Unity 2021.3.21f)
 3. if you wish to build the game and test it, go to File->Build And Run or use the Ctrl-B shorcut
+
 
 ## Contribution
 If you are interested in making contributions to our project, you can do the following steps:
